@@ -30,7 +30,7 @@ namespace msg_board
         {
             services.AddControllersWithViews();
 
-            services.AddDbContext<DBContext>(options => options.UseInMemoryDatabase(""));
+            services.AddDbContext<DBContext>(options => options.UseInMemoryDatabase("test-db"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
