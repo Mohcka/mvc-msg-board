@@ -1,8 +1,33 @@
-﻿@{
+﻿@model msg_board.Models.HomeMessageVM
+
+@using (Html.BeginForm("Index", "Home")) {
+    @Html.AntiForgeryToken()
+}
+
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
+@* <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div> *@
+<h2>Create a Post</h2>
+<form method="POST">
+    @Html.TextAreaFor(m => m.PostMessage.MessageText)
+    <br/>
+    <button asp-controller="Home" asp-action="PostNewMessage">Submit</button>
+</form>
+
+<hr>
+
+<h2>Posts</h2>
+<div>
+    @foreach (var item in Model.Messages)
+    {
+        <div>@item.MessageText</div>
+        <br/>
+    }
 </div>
+

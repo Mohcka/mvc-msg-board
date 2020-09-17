@@ -6,21 +6,32 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using msg_board.Models;
+using msg_board.Data;
 
 namespace msg_board.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly DBContext _ctx;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, DBContext ctx)
         {
             _logger = logger;
+            _ctx = ctx;
+
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var posts = _ctx.Messages.Where(m => true).ToList();
+            var data = new HomeMessageVM
+            {
+                PostMessage = new Message(),
+                Messages = posts
+            };
+
+            return View(data);
         }
 
         public IActionResult Privacy()
@@ -28,7 +39,14 @@ namespace msg_board.Controllers
             return View();
         }
 
-        public async Task<IActionResult> PostMessage(string msg){
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> PostNewMessage(string msg){
+            Message newPost = new Message {
+                MessageText = msg
+            };
+
+            await _ctx.Messages.AddAsync(newPost);
+
             return RedirectToAction("Index", "Home");
         }
 
