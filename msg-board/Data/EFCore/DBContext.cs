@@ -10,7 +10,7 @@ namespace msg_board.Data
     /// DBSet of Locations
     /// </summary>
     /// <value></value>
-    public DbSet<Message> Locations { get; set; }
+    public DbSet<Message> Messages { get; set; }
 
     public DBContext(DbContextOptions<DBContext> options)
         : base(options)
