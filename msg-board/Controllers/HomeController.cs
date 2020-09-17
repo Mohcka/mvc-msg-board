@@ -28,6 +28,10 @@ namespace msg_board.Controllers
             return View();
         }
 
+        public async Task<IActionResult> PostMessage(string msg){
+            return RedirectToAction("Index", "Home");
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

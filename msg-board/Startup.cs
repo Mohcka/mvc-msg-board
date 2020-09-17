@@ -9,6 +9,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+
+using msg_board.Data;
+
 namespace msg_board
 {
     public class Startup
@@ -24,6 +27,8 @@ namespace msg_board
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddDbContext<DBContext>(options => options.UseInMemoryDatabase(""));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
